@@ -5,6 +5,8 @@ Created on Jun 19, 2017
 '''
 import json
 from flask import Flask, request, Response, jsonify
+from pymongo import MongoClient
+
 app = Flask(__name__)
 
 tasks = [
@@ -24,6 +26,13 @@ tasks = [
 
 @app.route("/login", methods=['GET'])
 def login():
+    client = MongoClient('123.57.164.21', 27017)
+    db_auth = client.admin
+    db_auth.authenticate("root", "Wk206464")
+    db=client.mongodb
+    collection=db.user
+    u2 = collection.find_one({'name':'wangke'})
+    print(u2)
     print request.args.get('abc')
     return jsonify({'tasks': tasks})
 
