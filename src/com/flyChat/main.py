@@ -28,7 +28,7 @@ tasks = [
 def login():
     client = MongoClient('123.57.164.21', 27017)
     db_auth = client.admin
-    db_auth.authenticate("root", "Wk206464")
+    db_auth.authenticate("xxxx", "xxxxxx")
     db=client.mongodb
     collection=db.user
     u2 = collection.find_one({'name':'wangke'})
