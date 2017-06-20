@@ -30,7 +30,7 @@ tasks = [
 def getDbConn():
     client = MongoClient('123.57.164.21', 27017)
     db_auth = client.admin
-    db_auth.authenticate("xxxx", "xxxx")
+    db_auth.authenticate("xxx", "xxxx")
     global db 
     db = client.mongodb
     print '数据库连接正常！'
@@ -50,10 +50,11 @@ def login(name, password):
 def registerUser(name, password):
     global db
     collection = db.user
-    u2 = collection.find_one({'name':'wangke', 'password':'123'})
-    print name
-    print password
-    print(u2)
+    selRs = collection.find_one({'name': name})
+    if selRs <> None:
+        return 'recode exist'
+    else:
+        collection.insert({'name':name, 'password':password})
     # print request.args.get('abc')
     return jsonify({'tasks': tasks})
 
