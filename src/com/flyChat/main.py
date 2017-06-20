@@ -47,7 +47,17 @@ def login(name, password):
         return 'login success'
     else:
         return 'login failure'
-
+    
+@app.route("/sendMessage/<fromUserId>/<toUserId>/<message>/<messageType>", methods=['GET'])
+def sendMessage(fromUserId, toUserId, message, messageType):
+    global db
+    collection = db.onMessage
+    intRs = collection.insert({'fromUserId':fromUserId, 'toUserId':toUserId, 'message':message, 'msgType': messageType})
+    if intRs <> None:
+        return 'insert success'
+    else:
+        return 'insert failure'
+    
 @app.route("/registerUser/<name>/<password>", methods=['GET'])
 def registerUser(name, password):
     global db
