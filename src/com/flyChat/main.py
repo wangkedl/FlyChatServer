@@ -30,7 +30,7 @@ tasks = [
 def getDbConn():
     client = MongoClient('123.57.164.21', 27017)
     db_auth = client.admin
-    db_auth.authenticate("xxx", "xxxx")
+    db_auth.authenticate("xx", "xxxx")
     global db 
     db = client.mongodb
     print '数据库连接正常！'
@@ -41,6 +41,8 @@ def login(name, password):
     global db
     collection = db.user
     selRs = collection.find_one({'name':name, 'password':password})
+    print selRs
+    print selRs.get('_id')
     if selRs <> None:
         return 'login success'
     else:
