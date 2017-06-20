@@ -40,11 +40,11 @@ def getDbConn():
 def login(name, password):
     global db
     collection = db.user
-    u2 = collection.find_one({'name':'wangke', 'password':'123'})
-    print name
-    print password
-    # print request.args.get('abc')
-    return jsonify({'tasks': tasks})
+    selRs = collection.find_one({'name':name, 'password':password})
+    if selRs <> None:
+        return 'login success'
+    else:
+        return 'login failure'
 
 @app.route("/registerUser/<name>/<password>", methods=['GET'])
 def registerUser(name, password):
@@ -55,8 +55,9 @@ def registerUser(name, password):
         return 'recode exist'
     else:
         collection.insert({'name':name, 'password':password})
+        return 'insert success'
     # print request.args.get('abc')
-    return jsonify({'tasks': tasks})
+    # return jsonify({'tasks': tasks})
 
 if __name__ == "__main__":
     getDbConn()
