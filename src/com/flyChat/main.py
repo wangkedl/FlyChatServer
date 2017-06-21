@@ -30,7 +30,7 @@ tasks = [
 def getDbConn():
     client = MongoClient('123.57.164.21', 27017)
     db_auth = client.admin
-    db_auth.authenticate("xx", "xxxx")
+    db_auth.authenticate("xxx", "xxx")
     global db 
     db = client.mongodb
     print '数据库连接正常！'
@@ -47,6 +47,16 @@ def login(name, password):
         return 'login success'
     else:
         return 'login failure'
+    
+@app.route("/throwMessage/<fromUserId>/<message>/<count>", methods=['GET'])
+def throwMessage(fromUserId, message, count):
+    global db
+    collection = db.newMessage
+    intRs = collection.insert({'fromUserId':fromUserId, 'message':message, 'count': count})
+    if intRs <> None:
+        return 'throw success'
+    else:
+        return 'throw failure'
     
 @app.route("/sendMessage/<fromUserId>/<toUserId>/<message>/<messageType>", methods=['GET'])
 def sendMessage(fromUserId, toUserId, message, messageType):
